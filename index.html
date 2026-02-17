@@ -83,8 +83,6 @@
     <script>
         const catalogue = [
             { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable.', icon: '🛁' },
-            { cat: 'Receveurs', nom: 'MODERNA', desc: 'SMC renforcé, aspect ardoise.', icon: '💎' },
-            { cat: 'Receveurs', nom: 'SLIM PN24', desc: 'Épaisseur 26mm, idéal accès PMR.', icon: '📏' },
             { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Panneaux muraux texture pierre.', icon: '🗿' },
             { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Polymère lisse, pose ultra-rapide.', icon: '🎨' },
             { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit avec bande occultante.', icon: '🖼️' },
@@ -131,7 +129,6 @@
             const produits = Array.from(selection).join(", ");
             const corps = `Client: ${nom} (Tel: ${tel}). Produits: ${produits}.`;
 
-            // Encodage spécial pour éviter que Outlook ne bloque le chargement
             const mailtoUrl = `mailto:${mailTo}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
             
             const btn = document.getElementById('btn-send');
@@ -141,7 +138,6 @@
             setTimeout(() => { btn.innerHTML = `DEMANDER LE DEVIS <span id="badge">${selection.size}</span>`; }, 3000);
         }
 
-        // C'est cette ligne qui fait apparaître les produits !
         renderGrid();
     </script>
 </body>
