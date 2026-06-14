@@ -17,7 +17,6 @@
         }
         .contact-card h2 { margin: 0; font-size: 1.3rem; text-transform: uppercase; }
         .contact-card .job { font-size: 0.9rem; color: var(--accent); font-weight: bold; margin: 8px 0; }
-        .contact-card .details-note { font-size: 0.8rem; margin-top: 15px; font-style: italic; opacity: 0.9; color: #e0e7ff; }
 
         .categories { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .cat-btn { padding: 8px 15px; border-radius: 20px; border: 2px solid var(--primary); background: white; cursor: pointer; font-weight: bold; font-size: 0.8rem; color: var(--primary); }
@@ -42,10 +41,27 @@
             display: flex; flex-direction: column; align-items: center; z-index: 9999;
         }
         .help-link { font-size: 0.75rem; color: var(--primary); text-decoration: underline; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
-        .client-inputs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .client-inputs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 900px; padding: 0 10px; }
         input { padding: 10px; border: 2px solid #eee; border-radius: 8px; width: 180px; font-family: inherit; }
+        #c_addr { width: 250px; }
         #btn-send { background: var(--primary); color: white; padding: 14px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; display: flex; gap: 10px; margin-top: 10px; }
         #badge { background: white; color: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        
+        /* Style pour rendre la note TRÈS visible sous le bouton */
+        .details-note { 
+            font-size: 0.85rem; 
+            margin-top: 12px; 
+            font-weight: bold; 
+            color: var(--primary); 
+            text-align: center;
+            padding: 0 15px;
+            max-width: 600px;
+        }
+
+        @media (max-width: 600px) {
+            .client-inputs { flex-direction: column; align-items: center; }
+            input, #c_addr { width: 90%; max-width: 300px; }
+        }
     </style>
 </head>
 <body>
@@ -56,9 +72,103 @@
         <h2>CARINE MARTINOT</h2>
         <div class="job">Responsable ZALEOO Bordeaux Ouest</div>
         <p>📞 06.26.59.39.39 | ✉️ bordeaux-ouest@zaleoo.com</p>
-        <div class="details-note">* Plus de détails techniques vous seront communiqués directement par Carine lors de l'envoi de votre demande.</div>
     </div>
 
     <div class="categories">
         <button class="cat-btn active" onclick="filterGrid('Tous', this)">Tous</button>
-        <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receve
+        <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receveurs</button>
+        <button class="cat-btn" onclick="filterGrid('Habillages', this)">Habillages</button>
+        <button class="cat-btn" onclick="filterGrid('Parois', this)">Parois</button>
+        <button class="cat-btn" onclick="filterGrid('Equipement', this)">Equipement</button>
+    </div>
+
+    <div class="grid" id="product-grid"></div>
+
+    <div class="footer-bar">
+        <div class="help-link" onclick="showHelp()">
+            ❓ Comment envoyer ma demande ? (cliquez ici)
+        </div>
+        <div class="client-inputs">
+            <input type="text" id="c_name" placeholder="Nom et Prénom">
+            <input type="tel" id="c_tel" placeholder="Téléphone">
+            <input type="text" id="c_addr" placeholder="Adresse postale complète">
+        </div>
+        <button id="btn-send" onclick="sendDevis()">
+            DEMANDER LE DEVIS <span id="badge">0</span>
+        </button>
+        <div class="details-note">
+            💡 Plus de détails techniques vous seront communiqués directement par Carine lors de l'envoi de votre demande.
+        </div>
+    </div>
+
+    <script>
+        const catalogue = [
+            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable.', icon: '🛁' },
+            { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Panneaux muraux texture pierre.', icon: '🗿' },
+            { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Polymère lisse, pose ultra-rapide.', icon: '🎨' },
+            { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit avec bande occultante.', icon: '🖼️' },
+            { cat: 'Parois', nom: 'Coulissante 2V', desc: 'Fermeture magnétique, roulements inox.', icon: '🚪' },
+            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable, aluminium et ABS.', icon: '🪑' },
+            { cat: 'Equipement', nom: 'Barre de maintien', desc: 'Ergonomique, fixation invisible.', icon: '✋' },
+            { cat: 'Equipement', nom: 'Colonne Thermostatique', desc: 'Sécurité 38°C, pommeau XXL.', icon: '🚿' },
+            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Antibuée, éclairage sensitif.', icon: '🪞' }
+        ];
+
+        let selection = new Set();
+
+        function showHelp() {
+            alert("COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom, téléphone et adresse.\n3. Cliquez sur le bouton : votre logiciel Outlook s'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu'Outlook est bien ouvert sur votre ordinateur.");
+        }
+
+        function renderGrid(filter = 'Tous') {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = "";
+            catalogue.forEach(p => {
+                if (filter === 'Tous' || p.cat === filter) {
+                    const card = document.createElement('div');
+                    card.className = "card" + (selection.has(p.nom) ? " selected" : "");
+                    card.onclick = function() {
+                        if(selection.has(p.nom)) { selection.delete(p.nom); card.classList.remove('selected'); }
+                        else { selection.add(p.nom); card.classList.add('selected'); }
+                        document.getElementById('badge').innerText = selection.size;
+                    };
+                    card.innerHTML = `<div class="icon-box">${p.icon}</div><h3>${p.nom}</h3><p>${p.desc}</p>`;
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        function filterGrid(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderGrid(cat);
+        }
+
+        function sendDevis() {
+            const nom = document.getElementById('c_name').value.trim();
+            const tel = document.getElementById('c_tel').value.trim();
+            const addr = document.getElementById('c_addr').value.trim();
+            
+            if (selection.size === 0 || !nom || !tel || !addr) {
+                return alert("Veuillez sélectionner au moins un produit et remplir toutes vos coordonnées (nom, téléphone, adresse).");
+            }
+
+            const mailTo = "bordeaux-ouest@zaleoo.com";
+            const sujet = "Nouveau Devis C-SAM : " + nom;
+            const produits = Array.from(selection).join("\n- ");
+            
+            const corps = `Nouvelle demande de devis via le configurateur :\n\n📌 COORDONNÉES DU CLIENT\nNom : ${nom}\nTéléphone : ${tel}\nAdresse : ${addr}\n\n🛒 PRODUITS SÉLECTIONNÉS\n- ${produits}\n\nMerci de recontacter ce client avec les détails techniques.`;
+
+            const mailtoUrl = `mailto:${mailTo}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+            
+            const btn = document.getElementById('btn-send');
+            btn.innerText = "OUVERTURE OUTLOOK...";
+            window.location.href = mailtoUrl;
+
+            setTimeout(() => { btn.innerHTML = `DEMANDER LE DEVIS <span id="badge">${selection.size}</span>`; }, 3000);
+        }
+
+        renderGrid();
+    </script>
+</body>
+</html>
