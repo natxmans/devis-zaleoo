@@ -40,7 +40,20 @@
             background: white; padding: 15px 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); 
             display: flex; flex-direction: column; align-items: center; z-index: 9999;
         }
-        .help-link { font-size: 0.75rem; color: var(--primary); text-decoration: underline; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
+        .help-link { font-size: 0.75rem; color: var(--primary); text-decoration: none; cursor: pointer; margin-bottom: 10px; font-weight: bold; background: #eef2ff; border: 1.5px solid var(--primary); border-radius: 20px; padding: 5px 14px; transition: 0.2s; }
+        .help-link:hover { background: var(--primary); color: white; }
+
+        /* Modale */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99999; align-items: center; justify-content: center; }
+        .modal-overlay.open { display: flex; }
+        .modal-box { background: white; border-radius: 20px; padding: 30px 25px; max-width: 420px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: popIn 0.25s ease; }
+        @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .modal-box h3 { color: var(--primary); margin: 0 0 18px; font-size: 1.1rem; text-align: center; }
+        .modal-step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+        .step-num { background: var(--primary); color: white; border-radius: 50%; width: 28px; height: 28px; min-width: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; }
+        .step-text { font-size: 0.85rem; color: #444; line-height: 1.5; }
+        .modal-note { font-size: 0.75rem; color: #999; background: #f8f9fa; border-radius: 10px; padding: 10px; margin-top: 15px; text-align: center; }
+        .modal-close { display: block; margin: 18px auto 0; background: var(--primary); color: white; border: none; border-radius: 50px; padding: 10px 30px; font-weight: bold; cursor: pointer; font-family: inherit; font-size: 0.9rem; }
         .client-inputs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         input { padding: 10px; border: 2px solid #eee; border-radius: 8px; width: 180px; font-family: inherit; }
         #btn-send { background: var(--primary); color: white; padding: 14px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; display: flex; gap: 10px; margin-top: 10px; }
@@ -69,8 +82,8 @@
     <div class="grid" id="product-grid"></div>
 
     <div class="footer-bar">
-        <div class="help-link" onclick="alert('COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom et téléphone.\n3. Cliquez sur le bouton : votre logiciel Outlook s\'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu\'Outlook est bien ouvert sur votre ordinateur.')">
-            ❓ Comment envoyer ma demande ? (cliquez ici)
+        <div class="help-link" onclick="document.getElementById('modal-aide').classList.add('open')">
+            ❓ Comment envoyer ma demande ?
         </div>
         <div class="client-inputs">
             <input type="text" id="c_name" placeholder="Nom et Prénom">
@@ -81,6 +94,31 @@
             DEMANDER LE DEVIS <span id="badge">0</span>
         </button>
         <p class="footer-note">💬 Carine vous recontactera pour vous donner plus de détails sur les produits sélectionnés.</p>
+    </div>
+
+    <!-- Modale d'aide -->
+    <div class="modal-overlay" id="modal-aide" onclick="if(event.target===this) this.classList.remove('open')">
+        <div class="modal-box">
+            <h3>📋 Comment envoyer ma demande ?</h3>
+            <div class="modal-step">
+                <div class="step-num">1</div>
+                <div class="step-text">Parcourez le catalogue et <strong>cliquez sur les produits</strong> qui vous intéressent — ils s'encadrent en bleu.</div>
+            </div>
+            <div class="modal-step">
+                <div class="step-num">2</div>
+                <div class="step-text">Renseignez votre <strong>nom, téléphone</strong> et <strong>adresse de résidence</strong> dans les champs en bas.</div>
+            </div>
+            <div class="modal-step">
+                <div class="step-num">3</div>
+                <div class="step-text">Cliquez sur <strong>"DEMANDER LE DEVIS"</strong> : votre messagerie s'ouvre avec un mail déjà prêt à envoyer à Carine.</div>
+            </div>
+            <div class="modal-step">
+                <div class="step-num">4</div>
+                <div class="step-text">Envoyez le mail et <strong>Carine vous recontacte</strong> rapidement avec tous les détails et le devis personnalisé !</div>
+            </div>
+            <div class="modal-note">⚠️ Si rien ne se passe à l'étape 3, vérifiez qu'Outlook (ou votre messagerie par défaut) est bien installé sur votre ordinateur.</div>
+            <button class="modal-close" onclick="document.getElementById('modal-aide').classList.remove('open')">J'ai compris ✓</button>
+        </div>
     </div>
 
     <script>
