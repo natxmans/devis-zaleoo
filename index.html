@@ -9,31 +9,55 @@
         :root { --primary: #293da4; --accent: #5cbbf6; --bg: #f4f7f9; }
         body { background-color: var(--bg); font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .header-logo { max-width: 180px; height: auto; margin-bottom: 20px; }
-        .contact-card { background: linear-gradient(135deg, var(--primary) 0%, #1a2b80 100%); color: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 550px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .contact-card h2 { margin: 0; font-size: 1.3rem; }
+        
+        .contact-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2b80 100%);
+            color: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 550px;
+            margin-bottom: 30px; box-shadow: 0 10px 30px rgba(41, 61, 164, 0.2); text-align: center;
+        }
+        .contact-card h2 { margin: 0; font-size: 1.3rem; text-transform: uppercase; }
+        .contact-card .job { font-size: 0.9rem; color: var(--accent); font-weight: bold; margin: 8px 0; }
+
         .categories { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .cat-btn { padding: 8px 15px; border-radius: 20px; border: 2px solid var(--primary); background: white; cursor: pointer; font-weight: bold; font-size: 0.8rem; color: var(--primary); }
         .cat-btn.active { background: var(--primary); color: white; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; max-width: 1100px; padding-bottom: 250px; }
-        .card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 3px solid transparent; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .card.selected { border-color: var(--accent); background-color: #f0f9ff; }
+
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; width: 100%; max-width: 1100px; padding-bottom: 320px; 
+        }
+        .card { 
+            background: white; padding: 15px; border-radius: 12px; text-align: center;
+            cursor: pointer; border: 3px solid transparent; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .card.selected { border-color: var(--accent); background-color: #f0f9ff; transform: scale(1.02); }
         .icon-box { font-size: 35px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; padding: 10px; }
         h3 { margin: 5px 0; font-size: 0.85rem; color: var(--primary); min-height: 34px; display: flex; align-items: center; justify-content: center; }
         .card p { font-size: 0.75rem; color: #666; margin: 0; }
-        .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 15px 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; z-index: 9999; }
-        .client-inputs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 10px; }
+
+        .footer-bar { 
+            position: fixed; bottom: 0; left: 0; width: 100%; 
+            background: white; padding: 15px 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); 
+            display: flex; flex-direction: column; align-items: center; z-index: 9999;
+        }
+        .help-link { font-size: 0.75rem; color: var(--primary); text-decoration: underline; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
+        .client-inputs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
         input { padding: 10px; border: 2px solid #eee; border-radius: 8px; width: 180px; font-family: inherit; }
-        #btn-send { background: var(--primary); color: white; padding: 14px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; display: flex; gap: 10px; }
-        .details-note { font-size: 0.85rem; margin-top: 10px; font-weight: bold; color: var(--primary); text-align: center; }
+        #btn-send { background: var(--primary); color: white; padding: 14px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; display: flex; gap: 10px; margin-top: 10px; }
+        #badge { background: white; color: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        .footer-note { font-size: 0.72rem; color: #888; margin-top: 8px; text-align: center; }
     </style>
 </head>
 <body>
+
     <img src="C-SAM-.png" alt="Logo C-SAM" class="header-logo">
+
     <div class="contact-card">
         <h2>CARINE MARTINOT</h2>
-        <p>Responsable ZALEOO Bordeaux Ouest</p>
+        <div class="job">Responsable ZALEOO Bordeaux Ouest</div>
         <p>📞 06.26.59.39.39 | ✉️ bordeaux-ouest@zaleoo.com</p>
     </div>
+
     <div class="categories">
         <button class="cat-btn active" onclick="filterGrid('Tous', this)">Tous</button>
         <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receveurs</button>
@@ -41,32 +65,41 @@
         <button class="cat-btn" onclick="filterGrid('Parois', this)">Parois</button>
         <button class="cat-btn" onclick="filterGrid('Equipement', this)">Equipement</button>
     </div>
+
     <div class="grid" id="product-grid"></div>
+
     <div class="footer-bar">
+        <div class="help-link" onclick="alert('COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom et téléphone.\n3. Cliquez sur le bouton : votre logiciel Outlook s\'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu\'Outlook est bien ouvert sur votre ordinateur.')">
+            ❓ Comment envoyer ma demande ? (cliquez ici)
+        </div>
         <div class="client-inputs">
             <input type="text" id="c_name" placeholder="Nom et Prénom">
             <input type="tel" id="c_tel" placeholder="Téléphone">
-            <input type="text" id="c_addr" placeholder="Adresse de résidence">
+            <input type="text" id="c_adresse" placeholder="Adresse de résidence">
         </div>
-        <button id="btn-send" onclick="sendDevis()">DEMANDER LE DEVIS <span id="badge">0</span></button>
-        <div class="details-note">💡 Plus de détails techniques vous seront communiqués directement par Carine.</div>
+        <button id="btn-send" onclick="sendDevis()">
+            DEMANDER LE DEVIS <span id="badge">0</span>
+        </button>
+        <p class="footer-note">💬 Carine vous recontactera pour vous donner plus de détails sur les produits sélectionnés.</p>
     </div>
+
     <script>
         const catalogue = [
-            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24.', icon: '🛁' },
-            { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Texture pierre naturelle.', icon: '🗿' },
-            { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Lisse et moderne.', icon: '🎨' },
-            { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit occultant.', icon: '🖼️' },
-            { cat: 'Parois', nom: 'Coulissante 2V', desc: 'Fermeture magnétique.', icon: '🚪' },
-            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable et robuste.', icon: '🪑' },
-            { cat: 'Equipement', nom: 'Barre de maintien', desc: 'Ergonomique.', icon: '✋' },
-            { cat: 'Equipement', nom: 'Colonne Thermostatique', desc: 'Sécurité 38°C.', icon: '🚿' },
-            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Éclairage sensitif.', icon: '🪞' }
+            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable.', icon: '🛁' },
+            { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Panneaux muraux texture pierre.', icon: '🗿' },
+            { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Polymère lisse, pose ultra-rapide.', icon: '🎨' },
+            { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit avec bande occultante.', icon: '🖼️' },
+            { cat: 'Parois', nom: 'Coulissante 2V', desc: 'Fermeture magnétique, roulements inox.', icon: '🚪' },
+            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable, aluminium et ABS.', icon: '🪑' },
+            { cat: 'Equipement', nom: 'Barre de maintien', desc: 'Ergonomique, fixation invisible.', icon: '✋' },
+            { cat: 'Equipement', nom: 'Colonne Thermostatique', desc: 'Sécurité 38°C, pommeau XXL.', icon: '🚿' },
+            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Antibuée, éclairage sensitif.', icon: '🪞' }
         ];
+
         let selection = new Set();
+
         function renderGrid(filter = 'Tous') {
             const container = document.getElementById('product-grid');
-            if (!container) return;
             container.innerHTML = "";
             catalogue.forEach(p => {
                 if (filter === 'Tous' || p.cat === filter) {
@@ -82,22 +115,34 @@
                 }
             });
         }
+
         function filterGrid(cat, btn) {
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderGrid(cat);
         }
+
         function sendDevis() {
             const nom = document.getElementById('c_name').value.trim();
             const tel = document.getElementById('c_tel').value.trim();
-            const addr = document.getElementById('c_addr').value.trim();
-            if (selection.size === 0 || !nom || !tel || !addr) return alert("Remplissez vos coordonnées et choisissez au moins 1 produit.");
+            const adresse = document.getElementById('c_adresse').value.trim();
+            if (selection.size === 0 || !nom || !tel || !adresse) return alert("Sélectionnez vos produits et remplissez tous vos coordonnées (nom, téléphone et adresse).");
+
+            const mailTo = "bordeaux-ouest@zaleoo.com";
             const sujet = "Devis C-SAM : " + nom;
-            const corps = `Client: ${nom}\nTel: ${tel}\nAdresse: ${addr}\nProduits: ${Array.from(selection).join(", ")}`;
-            window.location.href = `mailto:bordeaux-ouest@zaleoo.com?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+            const produits = Array.from(selection).join(", ");
+            const corps = `Client: ${nom} (Tel: ${tel})\nAdresse: ${adresse}\nProduits: ${produits}.`;
+
+            const mailtoUrl = `mailto:${mailTo}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+            
+            const btn = document.getElementById('btn-send');
+            btn.innerText = "OUVERTURE OUTLOOK...";
+            window.location.href = mailtoUrl;
+
+            setTimeout(() => { btn.innerHTML = `DEMANDER LE DEVIS <span id="badge">${selection.size}</span>`; }, 3000);
         }
-        // Force le chargement au démarrage
-        window.onload = function() { renderGrid(); };
+
+        renderGrid();
     </script>
 </body>
 </html>
