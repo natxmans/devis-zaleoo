@@ -17,6 +17,7 @@
         }
         .contact-card h2 { margin: 0; font-size: 1.3rem; text-transform: uppercase; }
         .contact-card .job { font-size: 0.9rem; color: var(--accent); font-weight: bold; margin: 8px 0; }
+        .contact-card .details-note { font-size: 0.8rem; margin-top: 15px; font-style: italic; opacity: 0.9; color: #e0e7ff; }
 
         .categories { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
         .cat-btn { padding: 8px 15px; border-radius: 20px; border: 2px solid var(--primary); background: white; cursor: pointer; font-weight: bold; font-size: 0.8rem; color: var(--primary); }
@@ -55,94 +56,9 @@
         <h2>CARINE MARTINOT</h2>
         <div class="job">Responsable ZALEOO Bordeaux Ouest</div>
         <p>📞 06.26.59.39.39 | ✉️ bordeaux-ouest@zaleoo.com</p>
+        <div class="details-note">* Plus de détails techniques vous seront communiqués directement par Carine lors de l'envoi de votre demande.</div>
     </div>
 
     <div class="categories">
         <button class="cat-btn active" onclick="filterGrid('Tous', this)">Tous</button>
-        <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receveurs</button>
-        <button class="cat-btn" onclick="filterGrid('Habillages', this)">Habillages</button>
-        <button class="cat-btn" onclick="filterGrid('Parois', this)">Parois</button>
-        <button class="cat-btn" onclick="filterGrid('Equipement', this)">Equipement</button>
-    </div>
-
-    <div class="grid" id="product-grid"></div>
-
-    <div class="footer-bar">
-        <div class="help-link" onclick="showHelp()">
-            ❓ Comment envoyer ma demande ? (cliquez ici)
-        </div>
-        <div class="client-inputs">
-            <input type="text" id="c_name" placeholder="Nom et Prénom">
-            <input type="tel" id="c_tel" placeholder="Téléphone">
-        </div>
-        <button id="btn-send" onclick="sendDevis()">
-            DEMANDER LE DEVIS <span id="badge">0</span>
-        </button>
-    </div>
-
-    <script>
-        const catalogue = [
-            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable.', icon: '🛁' },
-            { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Panneaux muraux texture pierre.', icon: '🗿' },
-            { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Polymère lisse, pose ultra-rapide.', icon: '🎨' },
-            { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit avec bande occultante.', icon: '🖼️' },
-            { cat: 'Parois', nom: 'Coulissante 2V', desc: 'Fermeture magnétique, roulements inox.', icon: '🚪' },
-            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable, aluminium et ABS.', icon: '🪑' },
-            { cat: 'Equipement', nom: 'Barre de maintien', desc: 'Ergonomique, fixation invisible.', icon: '✋' },
-            { cat: 'Equipement', nom: 'Colonne Thermostatique', desc: 'Sécurité 38°C, pommeau XXL.', icon: '🚿' },
-            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Antibuée, éclairage sensitif.', icon: '🪞' }
-        ];
-
-        let selection = new Set();
-
-        function showHelp() {
-            alert("COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom et téléphone.\n3. Cliquez sur le bouton : votre logiciel Outlook s'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu'Outlook est bien ouvert sur votre ordinateur.");
-        }
-
-        function renderGrid(filter = 'Tous') {
-            const container = document.getElementById('product-grid');
-            container.innerHTML = "";
-            catalogue.forEach(p => {
-                if (filter === 'Tous' || p.cat === filter) {
-                    const card = document.createElement('div');
-                    card.className = "card" + (selection.has(p.nom) ? " selected" : "");
-                    card.onclick = function() {
-                        if(selection.has(p.nom)) { selection.delete(p.nom); card.classList.remove('selected'); }
-                        else { selection.add(p.nom); card.classList.add('selected'); }
-                        document.getElementById('badge').innerText = selection.size;
-                    };
-                    card.innerHTML = `<div class="icon-box">${p.icon}</div><h3>${p.nom}</h3><p>${p.desc}</p>`;
-                    container.appendChild(card);
-                }
-            });
-        }
-
-        function filterGrid(cat, btn) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderGrid(cat);
-        }
-
-        function sendDevis() {
-            const nom = document.getElementById('c_name').value.trim();
-            const tel = document.getElementById('c_tel').value.trim();
-            if (selection.size === 0 || !nom || !tel) return alert("Sélectionnez vos produits et remplissez vos coordonnées.");
-
-            const mailTo = "bordeaux-ouest@zaleoo.com";
-            const sujet = "Devis C-SAM : " + nom;
-            const produits = Array.from(selection).join(", ");
-            const corps = `Client: ${nom} (Tel: ${tel}). Produits: ${produits}.`;
-
-            const mailtoUrl = `mailto:${mailTo}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
-            
-            const btn = document.getElementById('btn-send');
-            btn.innerText = "OUVERTURE OUTLOOK...";
-            window.location.href = mailtoUrl;
-
-            setTimeout(() => { btn.innerHTML = `DEMANDER LE DEVIS <span id="badge">${selection.size}</span>`; }, 3000);
-        }
-
-        renderGrid();
-    </script>
-</body>
-</html>
+        <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receve
