@@ -68,7 +68,7 @@
     <div class="grid" id="product-grid"></div>
 
     <div class="footer-bar">
-        <div class="help-link" onclick="alert('COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom et téléphone.\n3. Cliquez sur le bouton : votre logiciel Outlook s\'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu\'Outlook est bien ouvert sur votre ordinateur.')">
+        <div class="help-link" onclick="showHelp()">
             ❓ Comment envoyer ma demande ? (cliquez ici)
         </div>
         <div class="client-inputs">
@@ -94,6 +94,10 @@
         ];
 
         let selection = new Set();
+
+        function showHelp() {
+            alert("COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom et téléphone.\n3. Cliquez sur le bouton : votre logiciel Outlook s'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu'Outlook est bien ouvert sur votre ordinateur.");
+        }
 
         function renderGrid(filter = 'Tous') {
             const container = document.getElementById('product-grid');
