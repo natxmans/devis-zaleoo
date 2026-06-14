@@ -47,7 +47,6 @@
         #btn-send { background: var(--primary); color: white; padding: 14px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; display: flex; gap: 10px; margin-top: 10px; }
         #badge { background: white; color: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
         
-        /* Style pour rendre la note TRÈS visible sous le bouton */
         .details-note { 
             font-size: 0.85rem; 
             margin-top: 12px; 
@@ -121,54 +120,4 @@
         }
 
         function renderGrid(filter = 'Tous') {
-            const container = document.getElementById('product-grid');
-            container.innerHTML = "";
-            catalogue.forEach(p => {
-                if (filter === 'Tous' || p.cat === filter) {
-                    const card = document.createElement('div');
-                    card.className = "card" + (selection.has(p.nom) ? " selected" : "");
-                    card.onclick = function() {
-                        if(selection.has(p.nom)) { selection.delete(p.nom); card.classList.remove('selected'); }
-                        else { selection.add(p.nom); card.classList.add('selected'); }
-                        document.getElementById('badge').innerText = selection.size;
-                    };
-                    card.innerHTML = `<div class="icon-box">${p.icon}</div><h3>${p.nom}</h3><p>${p.desc}</p>`;
-                    container.appendChild(card);
-                }
-            });
-        }
-
-        function filterGrid(cat, btn) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderGrid(cat);
-        }
-
-        function sendDevis() {
-            const nom = document.getElementById('c_name').value.trim();
-            const tel = document.getElementById('c_tel').value.trim();
-            const addr = document.getElementById('c_addr').value.trim();
-            
-            if (selection.size === 0 || !nom || !tel || !addr) {
-                return alert("Veuillez sélectionner au moins un produit et remplir toutes vos coordonnées (nom, téléphone, adresse).");
-            }
-
-            const mailTo = "bordeaux-ouest@zaleoo.com";
-            const sujet = "Nouveau Devis C-SAM : " + nom;
-            const produits = Array.from(selection).join("\n- ");
-            
-            const corps = `Nouvelle demande de devis via le configurateur :\n\n📌 COORDONNÉES DU CLIENT\nNom : ${nom}\nTéléphone : ${tel}\nAdresse : ${addr}\n\n🛒 PRODUITS SÉLECTIONNÉS\n- ${produits}\n\nMerci de recontacter ce client avec les détails techniques.`;
-
-            const mailtoUrl = `mailto:${mailTo}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
-            
-            const btn = document.getElementById('btn-send');
-            btn.innerText = "OUVERTURE OUTLOOK...";
-            window.location.href = mailtoUrl;
-
-            setTimeout(() => { btn.innerHTML = `DEMANDER LE DEVIS <span id="badge">${selection.size}</span>`; }, 3000);
-        }
-
-        renderGrid();
-    </script>
-</body>
-</html>
+            const container
