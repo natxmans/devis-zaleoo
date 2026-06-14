@@ -76,48 +76,4 @@
     <div class="categories">
         <button class="cat-btn active" onclick="filterGrid('Tous', this)">Tous</button>
         <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receveurs</button>
-        <button class="cat-btn" onclick="filterGrid('Habillages', this)">Habillages</button>
-        <button class="cat-btn" onclick="filterGrid('Parois', this)">Parois</button>
-        <button class="cat-btn" onclick="filterGrid('Equipement', this)">Equipement</button>
-    </div>
-
-    <div class="grid" id="product-grid"></div>
-
-    <div class="footer-bar">
-        <div class="help-link" onclick="showHelp()">
-            ❓ Comment envoyer ma demande ? (cliquez ici)
-        </div>
-        <div class="client-inputs">
-            <input type="text" id="c_name" placeholder="Nom et Prénom">
-            <input type="tel" id="c_tel" placeholder="Téléphone">
-            <input type="text" id="c_addr" placeholder="Adresse postale complète">
-        </div>
-        <button id="btn-send" onclick="sendDevis()">
-            DEMANDER LE DEVIS <span id="badge">0</span>
-        </button>
-        <div class="details-note">
-            💡 Plus de détails techniques vous seront communiqués directement par Carine lors de l'envoi de votre demande.
-        </div>
-    </div>
-
-    <script>
-        const catalogue = [
-            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable.', icon: '🛁' },
-            { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Panneaux muraux texture pierre.', icon: '🗿' },
-            { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Polymère lisse, pose ultra-rapide.', icon: '🎨' },
-            { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit avec bande occultante.', icon: '🖼️' },
-            { cat: 'Parois', nom: 'Coulissante 2V', desc: 'Fermeture magnétique, roulements inox.', icon: '🚪' },
-            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable, aluminium et ABS.', icon: '🪑' },
-            { cat: 'Equipement', nom: 'Barre de maintien', desc: 'Ergonomique, fixation invisible.', icon: '✋' },
-            { cat: 'Equipement', nom: 'Colonne Thermostatique', desc: 'Sécurité 38°C, pommeau XXL.', icon: '🚿' },
-            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Antibuée, éclairage sensitif.', icon: '🪞' }
-        ];
-
-        let selection = new Set();
-
-        function showHelp() {
-            alert("COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom, téléphone et adresse.\n3. Cliquez sur le bouton : votre logiciel Outlook s'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu'Outlook est bien ouvert sur votre ordinateur.");
-        }
-
-        function renderGrid(filter = 'Tous') {
-            const container
+        <button class="cat-btn" onclick="filterGrid('Habillages', this)">Habillages</button
