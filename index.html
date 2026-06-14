@@ -3,184 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C-SAM | Configurateur LT Showertec 2025</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>C-SAM | Configurateur Showertec 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #293da4; --accent: #5cbbf6; --bg: #f4f7f9; }
-        body { background-color: var(--bg); font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .header-logo { max-width: 180px; height: auto; margin-bottom: 20px; }
-        
-        .contact-card {
-            background: linear-gradient(135deg, var(--primary) 0%, #1a2b80 100%);
-            color: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 550px;
-            margin-bottom: 30px; box-shadow: 0 10px 30px rgba(41, 61, 164, 0.2); text-align: center;
+        :root {
+            --blue:#293da4;--blue-dk:#1a2878;--sky:#5cbbf6;--bg:#f0f3f8;
+            --white:#ffffff;--text:#1c1f2e;--muted:#7a80a0;--border:#e2e7f2;
+            --sel-bg:#eef4ff;--sel-bd:#5cbbf6;
+            --shadow:0 4px 20px rgba(41,61,164,0.08);
+            --shadow-h:0 8px 32px rgba(41,61,164,0.16);
         }
-        .contact-card h2 { margin: 0; font-size: 1.3rem; text-transform: uppercase; }
-        .contact-card .job { font-size: 0.9rem; color: var(--accent); font-weight: bold; margin: 8px 0; }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;}
 
-        .categories { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
-        .cat-btn { padding: 8px 15px; border-radius: 20px; border: 2px solid var(--primary); background: white; cursor: pointer; font-weight: bold; font-size: 0.8rem; color: var(--primary); }
-        .cat-btn.active { background: var(--primary); color: white; }
+        /* HEADER */
+        .header{background:linear-gradient(135deg,var(--blue-dk) 0%,var(--blue) 60%,#3a52c4 100%);padding:28px 24px 32px;display:flex;flex-direction:column;align-items:center;gap:20px;position:relative;overflow:hidden;}
+        .header::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(92,187,246,0.18) 0%,transparent 70%);top:-100px;right:-80px;border-radius:50%;}
+        .header::after{content:'';position:absolute;width:250px;height:250px;background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);bottom:-60px;left:20px;border-radius:50%;}
+        .header-logo{max-width:160px;height:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.2));position:relative;z-index:1;}
+        .contact-card{background:rgba(255,255,255,0.10);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.18);color:white;padding:20px 28px;border-radius:20px;width:100%;max-width:480px;text-align:center;position:relative;z-index:1;}
+        .contact-avatar{width:52px;height:52px;background:linear-gradient(135deg,var(--sky),#3a9fd8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 12px;box-shadow:0 4px 14px rgba(92,187,246,0.4);}
+        .contact-card h2{font-family:'DM Serif Display',serif;font-size:1.25rem;font-weight:400;letter-spacing:0.02em;margin-bottom:4px;}
+        .contact-job{font-size:0.78rem;color:var(--sky);font-weight:500;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
+        .contact-info{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+        .contact-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:5px 12px;font-size:0.78rem;font-weight:500;}
 
-        .grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 15px; width: 100%; max-width: 1100px; padding-bottom: 320px; 
-        }
-        .card { 
-            background: white; padding: 15px; border-radius: 12px; text-align: center;
-            cursor: pointer; border: 3px solid transparent; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .card.selected { border-color: var(--accent); background-color: #f0f9ff; transform: scale(1.02); }
-        .icon-box { font-size: 35px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; padding: 10px; }
-        h3 { margin: 5px 0; font-size: 0.85rem; color: var(--primary); min-height: 34px; display: flex; align-items: center; justify-content: center; }
-        .card p { font-size: 0.75rem; color: #666; margin: 0; }
+        /* MAIN */
+        .main{max-width:1100px;margin:0 auto;padding:28px 20px 380px;}
+        .section-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--blue);margin-bottom:6px;}
+        .section-sub{font-size:0.82rem;color:var(--muted);margin-bottom:20px;}
 
-        .footer-bar { 
-            position: fixed; bottom: 0; left: 0; width: 100%; 
-            background: white; padding: 15px 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); 
-            display: flex; flex-direction: column; align-items: center; z-index: 9999;
-        }
-        .help-link { font-size: 0.75rem; color: var(--primary); text-decoration: none; cursor: pointer; margin-bottom: 10px; font-weight: bold; background: #eef2ff; border: 1.5px solid var(--primary); border-radius: 20px; padding: 5px 14px; transition: 0.2s; }
-        .help-link:hover { background: var(--primary); color: white; }
+        /* FILTRES */
+        .categories{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+        .cat-btn{padding:8px 18px;border-radius:50px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.82rem;color:var(--muted);transition:all 0.2s ease;box-shadow:0 2px 6px rgba(0,0,0,0.04);}
+        .cat-btn:hover{border-color:var(--blue);color:var(--blue);}
+        .cat-btn.active{background:var(--blue);border-color:var(--blue);color:white;box-shadow:0 4px 12px rgba(41,61,164,0.25);}
 
-        /* Modale */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99999; align-items: center; justify-content: center; }
-        .modal-overlay.open { display: flex; }
-        .modal-box { background: white; border-radius: 20px; padding: 30px 25px; max-width: 420px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: popIn 0.25s ease; }
-        @keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-box h3 { color: var(--primary); margin: 0 0 18px; font-size: 1.1rem; text-align: center; }
-        .modal-step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
-        .step-num { background: var(--primary); color: white; border-radius: 50%; width: 28px; height: 28px; min-width: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; }
-        .step-text { font-size: 0.85rem; color: #444; line-height: 1.5; }
-        .modal-note { font-size: 0.75rem; color: #999; background: #f8f9fa; border-radius: 10px; padding: 10px; margin-top: 15px; text-align: center; }
-        .modal-close { display: block; margin: 18px auto 0; background: var(--primary); color: white; border: none; border-radius: 50px; padding: 10px 30px; font-weight: bold; cursor: pointer; font-family: inherit; font-size: 0.9rem; }
-        .client-inputs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-        input { padding: 10px; border: 2px solid #eee; border-radius: 8px; width: 180px; font-family: inherit; }
-        #btn-send { background: var(--primary); color: white; padding: 14px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; display: flex; gap: 10px; margin-top: 10px; }
-        #badge { background: white; color: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
-        .footer-note { font-size: 0.72rem; color: #888; margin-top: 8px; text-align: center; }
+        /* GRILLE */
+        .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;}
+        .card{background:var(--white);padding:20px 16px;border-radius:16px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all 0.22s ease;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+        .card:hover{box-shadow:var(--shadow-h);transform:translateY(-2px);}
+        .card.selected{border-color:var(--sel-bd);background:var(--sel-bg);box-shadow:0 6px 24px rgba(92,187,246,0.25);transform:translateY(-2px);}
+        .card.selected::after{content:'✓';position:absolute;top:10px;right:12px;width:22px;height:22px;background:var(--sky);color:white;border-radius:50%;font-size:0.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:22px;}
+        .icon-box{font-size:36px;margin-bottom:12px;background:var(--bg);border-radius:12px;padding:12px;display:inline-block;transition:transform 0.2s;}
+        .card:hover .icon-box{transform:scale(1.08);}
+        .card-cat{font-size:0.65rem;color:var(--sky);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+        .card h3{font-size:0.88rem;font-weight:600;color:var(--blue);margin-bottom:6px;min-height:36px;display:flex;align-items:center;justify-content:center;line-height:1.3;}
+        .card p{font-size:0.74rem;color:var(--muted);line-height:1.4;}
+
+        /* FOOTER */
+        .footer-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--white);padding:12px 20px 14px;box-shadow:0 -4px 30px rgba(41,61,164,0.10);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:9999;border-top:1px solid var(--border);}
+        .help-btn{font-size:0.75rem;color:var(--blue);cursor:pointer;font-weight:600;background:var(--sel-bg);border:1.5px solid var(--border);border-radius:50px;padding:6px 14px;transition:all 0.2s;}
+        .help-btn:hover{background:var(--blue);color:white;border-color:var(--blue);}
+        .client-inputs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+        .input-wrap{position:relative;display:flex;align-items:center;}
+        .input-icon{position:absolute;left:11px;font-size:0.82rem;pointer-events:none;}
+        input{padding:9px 12px 9px 32px;border:1.5px solid var(--border);border-radius:10px;width:172px;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:var(--text);background:var(--bg);transition:border-color 0.2s,box-shadow 0.2s;outline:none;}
+        input:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(92,187,246,0.15);background:white;}
+        input::placeholder{color:var(--muted);}
+        #btn-send{background:linear-gradient(135deg,var(--blue) 0%,#3a52c4 100%);color:white;padding:12px 36px;border-radius:50px;font-weight:600;font-size:0.88rem;border:none;cursor:pointer;display:flex;align-items:center;gap:10px;letter-spacing:0.04em;box-shadow:0 4px 16px rgba(41,61,164,0.3);transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+        #btn-send:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(41,61,164,0.4);}
+        #badge{background:var(--sky);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;}
+        .footer-note{font-size:0.70rem;color:var(--muted);text-align:center;}
+
+        /* MODALE */
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,15,40,0.5);backdrop-filter:blur(4px);z-index:99999;align-items:center;justify-content:center;}
+        .modal-overlay.open{display:flex;}
+        .modal-box{background:white;border-radius:24px;padding:32px 28px;max-width:430px;width:92%;box-shadow:0 24px 80px rgba(0,0,0,0.18);animation:popIn 0.28s cubic-bezier(0.34,1.56,0.64,1);}
+        @keyframes popIn{from{transform:scale(0.82) translateY(12px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
+        .modal-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+        .modal-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--blue),#3a52c4);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+        .modal-title{font-family:'DM Serif Display',serif;font-size:1.15rem;color:var(--blue);}
+        .modal-step{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+        .step-num{background:linear-gradient(135deg,var(--blue),#3a52c4);color:white;border-radius:10px;width:30px;height:30px;min-width:30px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;}
+        .step-text{font-size:0.84rem;color:#444;line-height:1.6;padding-top:4px;}
+        .modal-note{font-size:0.74rem;color:var(--muted);background:var(--bg);border-radius:12px;padding:12px 14px;margin-top:18px;line-height:1.5;border-left:3px solid var(--sky);}
+        .modal-close{display:block;width:100%;margin-top:20px;background:linear-gradient(135deg,var(--blue),#3a52c4);color:white;border:none;border-radius:50px;padding:12px;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:0.03em;transition:all 0.2s;}
+        .modal-close:hover{opacity:0.9;transform:translateY(-1px);}
+
+        @media(max-width:600px){.main{padding:20px 14px 420px;}.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}input{width:145px;}}
     </style>
 </head>
 <body>
 
+<div class="header">
     <img src="C-SAM-.png" alt="Logo C-SAM" class="header-logo">
-
     <div class="contact-card">
-        <h2>CARINE MARTINOT</h2>
-        <div class="job">Responsable ZALEOO Bordeaux Ouest</div>
-        <p>📞 06.26.59.39.39 | ✉️ bordeaux-ouest@zaleoo.com</p>
+        <div class="contact-avatar">👩‍💼</div>
+        <h2>Carine Martinot</h2>
+        <div class="contact-job">Responsable ZALEOO · Bordeaux Ouest</div>
+        <div class="contact-info">
+            <div class="contact-pill">📞 06.26.59.39.39</div>
+            <div class="contact-pill">✉️ bordeaux-ouest@zaleoo.com</div>
+        </div>
     </div>
+</div>
 
+<div class="main">
+    <h1 class="section-title">Catalogue produits</h1>
+    <p class="section-sub">Sélectionnez les produits qui vous intéressent, puis envoyez votre demande.</p>
     <div class="categories">
-        <button class="cat-btn active" onclick="filterGrid('Tous', this)">Tous</button>
-        <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receveurs</button>
-        <button class="cat-btn" onclick="filterGrid('Habillages', this)">Habillages</button>
-        <button class="cat-btn" onclick="filterGrid('Parois', this)">Parois</button>
-        <button class="cat-btn" onclick="filterGrid('Equipement', this)">Equipement</button>
+        <button class="cat-btn active" onclick="filterGrid('Tous',this)">Tous</button>
+        <button class="cat-btn" onclick="filterGrid('Receveurs',this)">🛁 Receveurs</button>
+        <button class="cat-btn" onclick="filterGrid('Habillages',this)">🎨 Habillages</button>
+        <button class="cat-btn" onclick="filterGrid('Parois',this)">🚪 Parois</button>
+        <button class="cat-btn" onclick="filterGrid('Equipement',this)">🚿 Équipement</button>
     </div>
-
     <div class="grid" id="product-grid"></div>
+</div>
 
-    <div class="footer-bar">
-        <div class="help-link" onclick="document.getElementById('modal-aide').classList.add('open')">
-            ❓ Comment envoyer ma demande ?
-        </div>
-        <div class="client-inputs">
-            <input type="text" id="c_name" placeholder="Nom et Prénom">
-            <input type="tel" id="c_tel" placeholder="Téléphone">
-            <input type="text" id="c_adresse" placeholder="Adresse de résidence">
-        </div>
-        <button id="btn-send" onclick="sendDevis()">
-            DEMANDER LE DEVIS <span id="badge">0</span>
-        </button>
-        <p class="footer-note">💬 Carine vous recontactera pour vous donner plus de détails sur les produits sélectionnés.</p>
+<div class="footer-bar">
+    <div class="help-btn" onclick="document.getElementById('modal-aide').classList.add('open')">❓ Comment envoyer ma demande ?</div>
+    <div class="client-inputs">
+        <div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="c_name" placeholder="Nom et Prénom"></div>
+        <div class="input-wrap"><span class="input-icon">📞</span><input type="tel" id="c_tel" placeholder="Téléphone"></div>
+        <div class="input-wrap"><span class="input-icon">📍</span><input type="text" id="c_adresse" placeholder="Adresse de résidence"></div>
     </div>
+    <button id="btn-send" onclick="sendDevis()">✉️ DEMANDER LE DEVIS <span id="badge">0</span></button>
+    <p class="footer-note">💬 Carine vous recontactera avec tous les détails sur les produits sélectionnés.</p>
+</div>
 
-    <!-- Modale d'aide -->
-    <div class="modal-overlay" id="modal-aide" onclick="if(event.target===this) this.classList.remove('open')">
-        <div class="modal-box">
-            <h3>📋 Comment envoyer ma demande ?</h3>
-            <div class="modal-step">
-                <div class="step-num">1</div>
-                <div class="step-text">Parcourez le catalogue et <strong>cliquez sur les produits</strong> qui vous intéressent — ils s'encadrent en bleu.</div>
-            </div>
-            <div class="modal-step">
-                <div class="step-num">2</div>
-                <div class="step-text">Renseignez votre <strong>nom, téléphone</strong> et <strong>adresse de résidence</strong> dans les champs en bas.</div>
-            </div>
-            <div class="modal-step">
-                <div class="step-num">3</div>
-                <div class="step-text">Cliquez sur <strong>"DEMANDER LE DEVIS"</strong> : votre messagerie s'ouvre avec un mail déjà prêt à envoyer à Carine.</div>
-            </div>
-            <div class="modal-step">
-                <div class="step-num">4</div>
-                <div class="step-text">Envoyez le mail et <strong>Carine vous recontacte</strong> rapidement avec tous les détails et le devis personnalisé !</div>
-            </div>
-            <div class="modal-note">⚠️ Si rien ne se passe à l'étape 3, vérifiez qu'Outlook (ou votre messagerie par défaut) est bien installé sur votre ordinateur.</div>
-            <button class="modal-close" onclick="document.getElementById('modal-aide').classList.remove('open')">J'ai compris ✓</button>
+<div class="modal-overlay" id="modal-aide" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-icon">📋</div>
+            <div class="modal-title">Comment envoyer ma demande ?</div>
         </div>
+        <div class="modal-step"><div class="step-num">1</div><div class="step-text">Parcourez le catalogue et <strong>cliquez sur les produits</strong> qui vous intéressent — une coche bleue confirme votre sélection.</div></div>
+        <div class="modal-step"><div class="step-num">2</div><div class="step-text">Renseignez votre <strong>nom, téléphone</strong> et <strong>adresse de résidence</strong> dans les champs en bas de l'écran.</div></div>
+        <div class="modal-step"><div class="step-num">3</div><div class="step-text">Cliquez sur <strong>"Demander le devis"</strong> : votre messagerie s'ouvre avec un mail déjà prêt à envoyer à Carine.</div></div>
+        <div class="modal-step"><div class="step-num">4</div><div class="step-text">Envoyez le mail — <strong>Carine vous recontacte</strong> rapidement avec tous les détails et votre devis personnalisé !</div></div>
+        <div class="modal-note">⚠️ Si rien ne se passe à l'étape 3, vérifiez qu'Outlook (ou votre messagerie par défaut) est bien installé sur votre ordinateur.</div>
+        <button class="modal-close" onclick="document.getElementById('modal-aide').classList.remove('open')">J'ai compris ✓</button>
     </div>
+</div>
 
-    <script>
-        const catalogue = [
-            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable.', icon: '🛁' },
-            { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Panneaux muraux texture pierre.', icon: '🗿' },
-            { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Polymère lisse, pose ultra-rapide.', icon: '🎨' },
-            { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit avec bande occultante.', icon: '🖼️' },
-            { cat: 'Parois', nom: 'Coulissante 2V', desc: 'Fermeture magnétique, roulements inox.', icon: '🚪' },
-            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable, aluminium et ABS.', icon: '🪑' },
-            { cat: 'Equipement', nom: 'Barre de maintien', desc: 'Ergonomique, fixation invisible.', icon: '✋' },
-            { cat: 'Equipement', nom: 'Colonne Thermostatique', desc: 'Sécurité 38°C, pommeau XXL.', icon: '🚿' },
-            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Antibuée, éclairage sensitif.', icon: '🪞' }
-        ];
-
-        let selection = new Set();
-
-        function renderGrid(filter = 'Tous') {
-            const container = document.getElementById('product-grid');
-            container.innerHTML = "";
-            catalogue.forEach(p => {
-                if (filter === 'Tous' || p.cat === filter) {
-                    const card = document.createElement('div');
-                    card.className = "card" + (selection.has(p.nom) ? " selected" : "");
-                    card.onclick = function() {
-                        if(selection.has(p.nom)) { selection.delete(p.nom); card.classList.remove('selected'); }
-                        else { selection.add(p.nom); card.classList.add('selected'); }
-                        document.getElementById('badge').innerText = selection.size;
-                    };
-                    card.innerHTML = `<div class="icon-box">${p.icon}</div><h3>${p.nom}</h3><p>${p.desc}</p>`;
-                    container.appendChild(card);
-                }
-            });
-        }
-
-        function filterGrid(cat, btn) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderGrid(cat);
-        }
-
-        function sendDevis() {
-            const nom = document.getElementById('c_name').value.trim();
-            const tel = document.getElementById('c_tel').value.trim();
-            const adresse = document.getElementById('c_adresse').value.trim();
-            if (selection.size === 0 || !nom || !tel || !adresse) return alert("Sélectionnez vos produits et remplissez tous vos coordonnées (nom, téléphone et adresse).");
-
-            const mailTo = "bordeaux-ouest@zaleoo.com";
-            const sujet = "Devis C-SAM : " + nom;
-            const produits = Array.from(selection).join(", ");
-            const corps = `Client: ${nom} (Tel: ${tel})\nAdresse: ${adresse}\nProduits: ${produits}.`;
-
-            const mailtoUrl = `mailto:${mailTo}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
-            
-            const btn = document.getElementById('btn-send');
-            btn.innerText = "OUVERTURE OUTLOOK...";
-            window.location.href = mailtoUrl;
-
-            setTimeout(() => { btn.innerHTML = `DEMANDER LE DEVIS <span id="badge">${selection.size}</span>`; }, 3000);
-        }
-
-        renderGrid();
-    </script>
+<script>
+    const catalogue=[
+        {cat:'Receveurs',nom:'FUTURA NÉO',desc:'Extra-plat 35mm, PN24, découpable.',icon:'🛁'},
+        {cat:'Habillages',nom:'CARRELO Pierre',desc:'Panneaux muraux texture pierre.',icon:'🗿'},
+        {cat:'Habillages',nom:'CARRELO Design',desc:'Polymère lisse, pose ultra-rapide.',icon:'🎨'},
+        {cat:'Parois',nom:'Paroi INTIMITY',desc:'Verre sécurit avec bande occultante.',icon:'🖼️'},
+        {cat:'Parois',nom:'Coulissante 2V',desc:'Fermeture magnétique, roulements inox.',icon:'🚪'},
+        {cat:'Equipement',nom:'Siège DESIGN',desc:'Escamotable, aluminium et ABS.',icon:'🪑'},
+        {cat:'Equipement',nom:'Barre de maintien',desc:'Ergonomique, fixation invisible.',icon:'✋'},
+        {cat:'Equipement',nom:'Colonne Thermostatique',desc:'Sécurité 38°C, pommeau XXL.',icon:'🚿'},
+        {cat:'Equipement',nom:'Miroir LED HD',desc:'Antibuée, éclairage sensitif.',icon:'🪞'}
+    ];
+    let selection=new Set();
+    function renderGrid(filter){
+        filter=filter||'Tous';
+        const c=document.getElementById('product-grid');c.innerHTML='';
+        catalogue.forEach(function(p){
+            if(filter==='Tous'||p.cat===filter){
+                const card=document.createElement('div');
+                card.className='card'+(selection.has(p.nom)?' selected':'');
+                card.onclick=function(){
+                    if(selection.has(p.nom)){selection.delete(p.nom);card.classList.remove('selected');}
+                    else{selection.add(p.nom);card.classList.add('selected');}
+                    document.getElementById('badge').innerText=selection.size;
+                };
+                card.innerHTML='<div class="icon-box">'+p.icon+'</div><div class="card-cat">'+p.cat+'</div><h3>'+p.nom+'</h3><p>'+p.desc+'</p>';
+                c.appendChild(card);
+            }
+        });
+    }
+    function filterGrid(cat,btn){
+        document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');renderGrid(cat);
+    }
+    function sendDevis(){
+        const nom=document.getElementById('c_name').value.trim();
+        const tel=document.getElementById('c_tel').value.trim();
+        const adresse=document.getElementById('c_adresse').value.trim();
+        if(selection.size===0||!nom||!tel||!adresse)return alert('Veuillez sélectionner au moins un produit et remplir tous les champs.');
+        const produits=Array.from(selection).join(', ');
+        const corps='Bonjour Carine,\n\nJe souhaite recevoir un devis pour les produits suivants :\n'+produits+'\n\nMes coordonnées :\nNom : '+nom+'\nTéléphone : '+tel+'\nAdresse : '+adresse+'\n\nMerci !';
+        const btn=document.getElementById('btn-send');
+        btn.innerHTML='⏳ Ouverture de la messagerie...';
+        window.location.href='mailto:bordeaux-ouest@zaleoo.com?subject='+encodeURIComponent('Devis C-SAM : '+nom)+'&body='+encodeURIComponent(corps);
+        setTimeout(function(){btn.innerHTML='✉️ DEMANDER LE DEVIS <span id="badge">'+selection.size+'</span>';},3000);
+    }
+    renderGrid();
+</script>
 </body>
 </html>
