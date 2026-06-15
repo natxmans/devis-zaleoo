@@ -3,209 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C-SAM | Configurateur Showertec 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <title>C-SAM | Configurateur LT Showertec 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --blue:#293da4;--blue-dk:#1a2878;--sky:#5cbbf6;--bg:#f0f3f8;
-            --white:#ffffff;--text:#1c1f2e;--muted:#7a80a0;--border:#e2e7f2;
-            --sel-bg:#eef4ff;--sel-bd:#5cbbf6;
-            --shadow:0 4px 20px rgba(41,61,164,0.08);
-            --shadow-h:0 8px 32px rgba(41,61,164,0.16);
+        :root { --primary: #293da4; --accent: #5cbbf6; --bg: #f4f7f9; }
+        body { background-color: var(--bg); font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .header-logo { max-width: 180px; height: auto; margin-bottom: 20px; }
+        
+        .contact-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #1a2b80 100%);
+            color: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 550px;
+            margin-bottom: 30px; box-shadow: 0 10px 30px rgba(41, 61, 164, 0.2); text-align: center;
         }
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-        body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;}
+        .contact-card h2 { margin: 0; font-size: 1.3rem; text-transform: uppercase; }
+        .contact-card .job { font-size: 0.9rem; color: var(--accent); font-weight: bold; margin: 8px 0; }
+        .contact-card .details-note { font-size: 0.8rem; margin-top: 15px; font-style: italic; opacity: 0.9; color: #e0e7ff; }
 
-        /* HEADER */
-        .header{background:var(--white);padding:24px;text-align:center;box-shadow:var(--shadow);border-bottom:1px solid var(--border);position:relative;z-index:10;}
-        .logo{height:50px;width:auto;margin-bottom:16px;}
-        
-        /* CARD CONTACT */
-        .card-contact{background:linear-gradient(135deg, var(--blue) 0%, var(--blue-dk) 100%);color:var(--white);padding:32px;border-radius:24px;max-width:500px;margin:32px auto;text-align:center;box-shadow:0 20px 40px rgba(41,61,164,0.2);position:relative;overflow:hidden;}
-        .card-contact::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);pointer-events:none;}
-        .card-contact h2{font-family:'DM Serif Display',serif;font-size:1.8rem;letter-spacing:1px;margin-bottom:6px;font-weight:400;}
-        .card-contact .role{color:var(--sky);font-weight:600;font-size:0.9rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;}
-        .card-contact .coords{font-size:0.95rem;opacity:0.9;display:flex;flex-direction:column;gap:6px;}
-        .card-contact .coords span{display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+        .categories { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+        .cat-btn { padding: 8px 15px; border-radius: 20px; border: 2px solid var(--primary); background: white; cursor: pointer; font-weight: bold; font-size: 0.8rem; color: var(--primary); }
+        .cat-btn.active { background: var(--primary); color: white; }
 
-        /* FILTERS */
-        .categories-nav{display:flex;justify-content:center;gap:10px;margin:32px auto;flex-wrap:wrap;padding:0 24px;max-width:900px;}
-        .cat-btn{background:var(--white);color:var(--blue);border:1px solid var(--border);padding:10px 22px;border-radius:30px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:0.9rem;cursor:pointer;transition:all 0.25s ease;box-shadow:var(--shadow);}
-        .cat-btn:hover{border-color:var(--blue);transform:translateY(-1px);}
-        .cat-btn.active{background:var(--blue);color:var(--white);border-color:var(--blue);box-shadow:0 8px 20px rgba(41,61,164,0.25);}
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; width: 100%; max-width: 1100px; padding-bottom: 280px; 
+        }
+        .card { 
+            background: white; padding: 15px; border-radius: 12px; text-align: center;
+            cursor: pointer; border: 3px solid transparent; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .card.selected { border-color: var(--accent); background-color: #f0f9ff; transform: scale(1.02); }
+        .icon-box { font-size: 35px; margin-bottom: 8px; background: #f8f9fa; border-radius: 8px; padding: 10px; }
+        h3 { margin: 5px 0; font-size: 0.85rem; color: var(--primary); min-height: 34px; display: flex; align-items: center; justify-content: center; }
+        .card p { font-size: 0.75rem; color: #666; margin: 0; }
 
-        /* GRID */
-        .grid-container{max-width:1300px;margin:0 auto;padding:0 24px 280px 24px;}
-        .grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));gap:24px;}
-        .card{background:var(--white);border-radius:20px;padding:24px;text-align:center;cursor:pointer;border:2px solid transparent;box-shadow:var(--shadow);transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1);position:relative;display:flex;flex-direction:column;align-items:center;}
-        .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-h);border-color:var(--border);}
-        .card.selected{background:var(--sel-bg);border-color:var(--sel-bd);box-shadow:0 12px 24px rgba(92,187,246,0.15);}
-        
-        .icon-box{width:64px;height:64px;background:var(--bg);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:16px;transition:all 0.25s ease;}
-        .card.selected .icon-box{background:var(--white);box-shadow:0 4px 12px rgba(92,187,246,0.1);}
-        
-        .card-cat{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
-        .card h3{font-size:1.05rem;color:var(--text);font-weight:600;margin-bottom:8px;line-height:1.3;}
-        .card p{font-size:0.85rem;color:var(--muted);line-height:1.4;margin-top:auto;}
+        .footer-bar { 
+            position: fixed; bottom: 0; left: 0; width: 100%; 
+            background: white; padding: 15px 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.1); 
+            display: flex; flex-direction: column; align-items: center; z-index: 9999;
+        }
+        .help-link { font-size: 0.75rem; color: var(--primary); text-decoration: underline; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
+        .client-inputs { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 900px; padding: 0 10px; }
+        input { padding: 10px; border: 2px solid #eee; border-radius: 8px; width: 180px; font-family: inherit; }
+        #c_addr { width: 250px; } /* Champ d'adresse un peu plus large */
+        #btn-send { background: var(--primary); color: white; padding: 14px 40px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; display: flex; gap: 10px; margin-top: 10px; }
+        #badge { background: white; color: var(--primary); border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
 
-        /* FOOTER BAR */
-        .footer-fixed{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 -10px 40px rgba(0,0,0,0.06);border-top:1px solid var(--border);padding:24px;z-index:100;display:flex;flex-direction:column;align-items:center;gap:16px;}
-        
-        .help-trigger{font-size:0.85rem;color:var(--blue);font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:opacity 0.2s;cursor:pointer;}
-        .help-trigger:hover{opacity:0.8;text-decoration:underline;}
-
-        .form-inputs{display:flex;gap:16px;justify-content:center;width:100%;max-width:900px;flex-wrap:wrap;}
-        .form-inputs input{background:var(--white);border:1px solid var(--border);padding:14px 20px;border-radius:14px;font-family:'DM Sans',sans-serif;font-size:0.95rem;color:var(--text);outline:none;transition:all 0.2s;width:240px;box-shadow:inset 0 2px 4px rgba(0,0,0,0.02);}
-        .form-inputs input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(41,61,164,0.1), inset 0 2px 4px rgba(0,0,0,0.02);}
-        .form-inputs input#c_adresse{width:320px;}
-
-        .btn-submit{background:var(--blue);color:var(--white);border:none;padding:16px 48px;border-radius:35px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:1rem;cursor:pointer;transition:all 0.25s ease;box-shadow:0 8px 24px rgba(41,61,164,0.2);display:inline-flex;align-items:center;gap:12px;}
-        .btn-submit:hover{background:var(--blue-dk);transform:translateY(-1px);box-shadow:0 12px 28px rgba(41,61,164,0.3);}
-        .btn-submit:active{transform:translateY(1px);}
-        
-        .badge-count{background:var(--white);color:var(--blue);font-size:0.8rem;font-weight:600;padding:2px 8px;border-radius:20px;min-width:22px;text-align:center;}
-
-        .info-note{font-size:0.8rem;color:var(--muted);font-weight:500;}
-
-        /* RESPONSIVE */
-        @media(max-width:768px) {
-            body{padding:0 0 20px 0;}
-            .card-contact{margin:20px;border-radius:16px;padding:24px;}
-            .form-inputs{flex-direction:column;align-items:center;gap:12px;width:100%;}
-            .form-inputs input, .form-inputs input#c_adresse{width:100%;max-width:340px;}
-            .footer-fixed{padding:16px;gap:12px;}
-            .btn-submit{width:100%;max-width:340px;justify-content:center;}
-            .grid-container{padding:0 16px 320px 16px;}
+        @media (max-width: 600px) {
+            .client-inputs { flex-direction: column; align-items: center; }
+            input, #c_addr { width: 90%; max-width: 300px; }
         }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <img src="C-SAM-.png" alt="C-SAM Logo" class="logo">
-    </header>
+    <img src="C-SAM-.png" alt="Logo C-SAM" class="header-logo">
 
-    <main class="grid-container">
-        <section class="card-contact">
-            <h2>CARINE MARTINOT</h2>
-            <div class="role">Responsable ZALEOO Bordeaux Ouest</div>
-            <div class="coords">
-                <span>📞 06.26.59.39.39</span>
-                <span>✉️ bordeaux-ouest@zaleoo.com</span>
-            </div>
-        </section>
+    <div class="contact-card">
+        <h2>CARINE MARTINOT</h2>
+        <div class="job">Responsable ZALEOO Bordeaux Ouest</div>
+        <p>📞 06.26.59.39.39 | ✉️ bordeaux-ouest@zaleoo.com</p>
+        <div class="details-note">* Plus de détails techniques vous seront communiqués directement par Carine lors de l'envoi de votre demande.</div>
+    </div>
 
-        <nav class="categories-nav">
-            <button class="cat-btn active" onclick="filterGrid('Tous', this)">Tous</button>
-            <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receveurs</button>
-            <button class="cat-btn" onclick="filterGrid('Habillages', this)">Habillages</button>
-            <button class="cat-btn" onclick="filterGrid('Parois', this)">Parois</button>
-            <button class="cat-btn" onclick="filterGrid('Robinetterie', this)">Robinetterie</button>
-            <button class="cat-btn" onclick="filterGrid('Sols', this)">Sols</button>
-            <button class="cat-btn" onclick="filterGrid('Equipement', this)">Equipement</button>
-        </nav>
+    <div class="categories">
+        <button class="cat-btn active" onclick="filterGrid('Tous', this)">Tous</button>
+        <button class="cat-btn" onclick="filterGrid('Receveurs', this)">Receveurs</button>
+        <button class="cat-btn" onclick="filterGrid('Habillages', this)">Habillages</button>
+        <button class="cat-btn" onclick="filterGrid('Parois', this)">Parois</button>
+        <button class="cat-btn" onclick="filterGrid('Equipement', this)">Equipement</button>
+    </div>
 
-        <section class="grid" id="product-grid"></section>
-    </main>
+    <div class="grid" id="product-grid"></div>
 
-    <footer class="footer-fixed">
-        <a class="help-trigger" onclick="showHelp()">❓ Comment envoyer ma demande ? (cliquez ici)</a>
-        
-        <div class="form-inputs">
+    <div class="footer-bar">
+        <div class="help-link" onclick="showHelp()">
+            ❓ Comment envoyer ma demande ? (cliquez ici)
+        </div>
+        <div class="client-inputs">
             <input type="text" id="c_name" placeholder="Nom et Prénom">
             <input type="tel" id="c_tel" placeholder="Téléphone">
-            <input type="text" id="c_adresse" placeholder="Adresse de résidence">
+            <input type="text" id="c_addr" placeholder="Adresse postale complète">
         </div>
-
-        <button class="btn-submit" id="btn-send" onclick="sendDevis()">
-            DEMANDER LE DEVIS <span class="badge-count" id="badge">0</span>
+        <button id="btn-send" onclick="sendDevis()">
+            DEMANDER LE DEVIS <span id="badge">0</span>
         </button>
-
-        <div class="info-note">💡 Plus de détails techniques vous seront communiqués directement par Carine lors de l'envoi de votre demande.</div>
-    </footer>
+    </div>
 
     <script>
-        // Catalogue complet LT-SHOWERTEC 2026 sans les colonnes de douche (excepté la gamme Dorée)
         const catalogue = [
-            // RECEVEURS
-            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable et adaptable.', icon: '🛁' },
-            { cat: 'Receveurs', nom: 'MODERNA PN24', desc: 'Extra-plat 40mm, texture douce en acrylique renforcé.', icon: '🛁' },
-
-            // HABILLAGES MURAUX
-            { cat: 'Habillages', nom: 'Panneaux CARRELO', desc: 'Imitation carrelage sans joints, étanchéité parfaite.', icon: '🧱' },
-            { cat: 'Habillages', nom: 'Panneaux DESIGN', desc: 'Lisse, finition polymère haut de gamme ou composite.', icon: '🎨' },
-            { cat: 'Habillages', nom: 'Panneaux RELIEF', desc: 'Aspect texturé contemporain (ardoise, ciment mat).', icon: '🪨' },
-            { cat: 'Habillages', nom: 'Panneaux SLIM', desc: 'Finesse extrême (18mm), grand choix de décors.', icon: '📏' },
-            { cat: 'Habillages', nom: 'Panneaux ULTRA', desc: 'Épaisseur ultra-fine 4mm, idéal rénovation rapide.', icon: '✨' },
-            { cat: 'Habillages', nom: 'Dalles Murales', desc: 'Effet carrelage authentique sans contrainte de pose.', icon: '🔳' },
-            { cat: 'Habillages', nom: 'Cloison double face', desc: 'Séparation d\'espace toute hauteur rigidifiée 63mm.', icon: '🚪' },
-            { cat: 'Habillages', nom: 'Niche à encastrer', desc: 'Rangement 100% étanche intégré dans l\'habillage.', icon: '🔲' },
-
-            // PAROIS VITRÉES
-            { cat: 'Parois', nom: 'Coulissante 2 Vantaux', desc: '1 panneau fixe + 1 coulissant, fermeture magnétique.', icon: '🚪' },
-            { cat: 'Parois', nom: 'Coulissante 3 Vantaux', desc: '1 panneau fixe + 2 coulissants pour un accès XXL.', icon: '🚪' },
-            { cat: 'Parois', nom: 'Fixe INTIMITY', desc: 'Verre sécurit 6mm avec sérigraphie centrale dépolie.', icon: '🌫️' },
-            { cat: 'Parois', nom: 'Fixe ELEGANCY', desc: 'Verre totalement transparent, traitement anticalcaire.', icon: '💧' },
-            { cat: 'Parois', nom: 'Paroi Pliante', desc: 'Ouverture totale battante, idéale petits espaces.', icon: '📐' },
-            { cat: 'Parois', nom: 'Rabat de douche', desc: 'Déflecteur pivotant contre les projections d\'eau.', icon: '🔄' },
-
-            // ROBINETTERIE (Uniquement Dorée et Mitigeurs lavabos)
-            { cat: 'Robinetterie', nom: 'Colonne Thermostatique DORÉE', desc: 'Ciel de pluie, douchette à main, finition Or brossé.', icon: '🚿' },
-            { cat: 'Robinetterie', nom: 'Colonne Déportée DORÉE', desc: 'Mitigeur excentré ergonomique, finition Or précieux.', icon: '🚿' },
-            { cat: 'Robinetterie', nom: 'Mitigeur Lavabo', desc: 'Design moderne, cartouche céramique haute précision.', icon: '🚰' },
-
-            // SOLS
-            { cat: 'Sols', nom: 'Sol SPC Antidérapant', desc: 'Classement PN18, lames clipsables étanches et phoniques.', icon: '🪵' },
-            { cat: 'Sols', nom: 'Sol CARRELO', desc: 'Revêtement de sol imitation carrelage étanche continu.', icon: '🧱' },
-
-            // EQUIPEMENT & AMEUBLEMENT
-            { cat: 'Equipement', nom: 'Meuble SDB Inox', desc: 'Ensemble vasque, tiroirs amortis et miroir LED.', icon: '🗄️' },
-            { cat: 'Equipement', nom: 'Vasque PMR', desc: 'Ergonomique, suspendue pour passage fauteuil roulant.', icon: '♿' },
-            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Système antibuée automatique, touches sensitives.', icon: '🪞' },
-            { cat: 'Equipement', nom: 'Abattant Original', desc: 'Fonction lavante et séchante, commandes latérales.', icon: '🚽' },
-            { cat: 'Equipement', nom: 'Abattant Deluxe', desc: 'Lavant, séchant avec désodorisation par UVC intégrée.', icon: '🚽' },
-            { cat: 'Equipement', nom: 'Accessoires Déco', desc: 'Étagères d\'angle, patères et porte-serviettes assortis.', icon: '🧴' },
-            { cat: 'Equipement', nom: 'Barres d\'appui DESIGN', desc: 'Fixation invisible, droites ou coudées à 135°.', icon: '✋' },
-            { cat: 'Equipement', nom: 'Barre relevable', desc: 'Aide au relevage PMR avec béquille de renfort au sol.', icon: '🦾' },
-            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable au mur avec mécanisme de frein de chute.', icon: '🪑' },
-            { cat: 'Equipement', nom: 'Tabouret Inox', desc: 'Assise antidérapante confortable, stable et mobile.', icon: '🪑' },
-            { cat: 'Equipement', nom: 'Siège ECO', desc: 'Assise suspendue ergonomique, avec ou sans accoudoirs.', icon: '🪑' }
+            { cat: 'Receveurs', nom: 'FUTURA NÉO', desc: 'Extra-plat 35mm, PN24, découpable.', icon: '🛁' },
+            { cat: 'Habillages', nom: 'CARRELO Pierre', desc: 'Panneaux muraux texture pierre.', icon: '🗿' },
+            { cat: 'Habillages', nom: 'CARRELO Design', desc: 'Polymère lisse, pose ultra-rapide.', icon: '🎨' },
+            { cat: 'Parois', nom: 'Paroi INTIMITY', desc: 'Verre sécurit avec bande occultante.', icon: '🖼️' },
+            { cat: 'Parois', nom: 'Coulissante 2V', desc: 'Fermeture magnétique, roulements inox.', icon: '🚪' },
+            { cat: 'Equipement', nom: 'Siège DESIGN', desc: 'Escamotable, aluminium et ABS.', icon: '🪑' },
+            { cat: 'Equipement', nom: 'Barre de maintien', desc: 'Ergonomique, fixation invisible.', icon: '✋' },
+            { cat: 'Equipement', nom: 'Colonne Thermostatique', desc: 'Sécurité 38°C, pommeau XXL.', icon: '🚿' },
+            { cat: 'Equipement', nom: 'Miroir LED HD', desc: 'Antibuée, éclairage sensitif.', icon: '🪞' }
         ];
 
         let selection = new Set();
 
         function showHelp() {
-            alert("COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits en cliquant sur les cartes.\n2. Entrez votre Nom, Téléphone et Adresse dans les champs en bas.\n3. Cliquez sur 'DEMANDER LE DEVIS' : votre logiciel Outlook ou de messagerie s'ouvrira automatiquement avec le mail pré-rempli.\n\nNote : Si rien ne se passe, vérifiez que votre logiciel de messagerie par défaut est bien configuré.");
+            alert("COMMENT ÇA MARCHE ?\n\n1. Sélectionnez vos produits.\n2. Entrez votre nom, téléphone et adresse.\n3. Cliquez sur le bouton : votre logiciel Outlook s'ouvrira automatiquement avec le mail déjà prêt.\n\nNote : Si rien ne se passe, vérifiez qu'Outlook est bien ouvert sur votre ordinateur.");
         }
 
         function renderGrid(filter = 'Tous') {
-            const c = document.getElementById('product-grid');
-            if (!c) return;
-            c.innerHTML = '';
-            catalogue.forEach(function(p) {
+            const container = document.getElementById('product-grid');
+            container.innerHTML = "";
+            catalogue.forEach(p => {
                 if (filter === 'Tous' || p.cat === filter) {
                     const card = document.createElement('div');
-                    card.className = 'card' + (selection.has(p.nom) ? ' selected' : '');
+                    card.className = "card" + (selection.has(p.nom) ? " selected" : "");
                     card.onclick = function() {
-                        if (selection.has(p.nom)) {
-                            selection.delete(p.nom);
-                            card.classList.remove('selected');
-                        } else {
-                            selection.add(p.nom);
-                            card.classList.add('selected');
-                        }
+                        if(selection.has(p.nom)) { selection.delete(p.nom); card.classList.remove('selected'); }
+                        else { selection.add(p.nom); card.classList.add('selected'); }
                         document.getElementById('badge').innerText = selection.size;
                     };
-                    card.innerHTML = '<div class="icon-box">' + p.icon + '</div><div class="card-cat">' + p.cat + '</div><h3>' + p.nom + '</h3><p>' + p.desc + '</p>';
-                    c.appendChild(card);
+                    card.innerHTML = `<div class="icon-box">${p.icon}</div><h3>${p.nom}</h3><p>${p.desc}</p>`;
+                    container.appendChild(card);
                 }
             });
         }
 
         function filterGrid(cat, btn) {
-            document.querySelectorAll('.cat-btn').forEach(function(b) {
-                b.classList.remove('active');
-            });
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderGrid(cat);
         }
@@ -213,29 +135,30 @@
         function sendDevis() {
             const nom = document.getElementById('c_name').value.trim();
             const tel = document.getElementById('c_tel').value.trim();
-            const adresse = document.getElementById('c_adresse').value.trim();
+            const addr = document.getElementById('c_addr').value.trim();
             
-            if (selection.size === 0 || !nom || !tel || !adresse) {
-                return alert('Veuillez sélectionner au moins un produit et remplir tous les champs (Nom, Téléphone, Adresse).');
+            // On vérifie que les 3 champs sont remplis
+            if (selection.size === 0 || !nom || !tel || !addr) {
+                return alert("Veuillez sélectionner au moins un produit et remplir toutes vos coordonnées (nom, téléphone, adresse).");
             }
+
+            const mailTo = "bordeaux-ouest@zaleoo.com";
+            const sujet = "Nouveau Devis C-SAM : " + nom;
+            const produits = Array.from(selection).join("\n- ");
             
-            const produits = Array.from(selection).join(', ');
-            const corps = 'Bonjour Carine,\n\nJe souhaite recevoir un devis pour les produits suivants :\n' + produits + '\n\nMes coordonnées :\nNom : ' + nom + '\nTéléphone : ' + tel + '\nAdresse de résidence : ' + adresse + '\n\nMerci !';
+            // Mise en forme de l'e-mail pour qu'il soit bien lisible par Carine
+            const corps = `Nouvelle demande de devis via le configurateur :\n\n📌 COORDONNÉES DU CLIENT\nNom : ${nom}\nTéléphone : ${tel}\nAdresse : ${addr}\n\n🛒 PRODUITS SÉLECTIONNÉS\n- ${produits}\n\nMerci de recontacter ce client avec les détails techniques.`;
+
+            const mailtoUrl = `mailto:${mailTo}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
             
             const btn = document.getElementById('btn-send');
-            btn.innerHTML = '⏳ Ouverture de la messagerie...';
-            
-            window.location.href = 'mailto:bordeaux-ouest@zaleoo.com?subject=' + encodeURIComponent('Devis C-SAM : ' + nom) + '&body=' + encodeURIComponent(corps);
-            
-            setTimeout(function() {
-                btn.innerHTML = 'DEMANDER LE DEVIS <span class="badge-count" id="badge">' + selection.size + '</span>';
-            }, 3000);
+            btn.innerText = "OUVERTURE OUTLOOK...";
+            window.location.href = mailtoUrl;
+
+            setTimeout(() => { btn.innerHTML = `DEMANDER LE DEVIS <span id="badge">${selection.size}</span>`; }, 3000);
         }
 
-        // Chargement initial automatique de la grille
-        window.onload = function() {
-            renderGrid();
-        };
+        renderGrid();
     </script>
 </body>
 </html>
