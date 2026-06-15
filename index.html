@@ -107,7 +107,10 @@
         <button class="cat-btn" onclick="filterGrid('Receveurs',this)">🛁 Receveurs</button>
         <button class="cat-btn" onclick="filterGrid('Habillages',this)">🎨 Habillages</button>
         <button class="cat-btn" onclick="filterGrid('Parois',this)">🚪 Parois</button>
-        <button class="cat-btn" onclick="filterGrid('Equipement',this)">🚿 Équipement</button>
+        <button class="cat-btn" onclick="filterGrid('Robinetterie',this)">🚿 Robinetterie</button>
+        <button class="cat-btn" onclick="filterGrid('Sols',this)">🟫 Sols</button>
+        <button class="cat-btn" onclick="filterGrid('Ameublement',this)">🪞 Ameublement</button>
+        <button class="cat-btn" onclick="filterGrid('Sécurité',this)">🦺 Sécurité</button>
     </div>
     <div class="grid" id="product-grid"></div>
 </div>
@@ -140,15 +143,53 @@
 
 <script>
     const catalogue=[
-        {cat:'Receveurs',nom:'FUTURA NÉO',desc:'Extra-plat 35mm, PN24, découpable.',icon:'🛁'},
-        {cat:'Habillages',nom:'CARRELO Pierre',desc:'Panneaux muraux texture pierre.',icon:'🗿'},
-        {cat:'Habillages',nom:'CARRELO Design',desc:'Polymère lisse, pose ultra-rapide.',icon:'🎨'},
-        {cat:'Parois',nom:'Paroi INTIMITY',desc:'Verre sécurit avec bande occultante.',icon:'🖼️'},
-        {cat:'Parois',nom:'Coulissante 2V',desc:'Fermeture magnétique, roulements inox.',icon:'🚪'},
-        {cat:'Equipement',nom:'Siège DESIGN',desc:'Escamotable, aluminium et ABS.',icon:'🪑'},
-        {cat:'Equipement',nom:'Barre de maintien',desc:'Ergonomique, fixation invisible.',icon:'✋'},
-        {cat:'Equipement',nom:'Colonne Thermostatique',desc:'Sécurité 38°C, pommeau XXL.',icon:'🚿'},
-        {cat:'Equipement',nom:'Miroir LED HD',desc:'Antibuée, éclairage sensitif.',icon:'🪞'}
+        /* RECEVEURS */
+        {cat:'Receveurs',nom:'FUTURA NÉO',desc:'Extra-plat 35mm, gelcoat blanc, PN24, découpable sur 3 côtés. Garantie 10 ans.',icon:'🛁'},
+        /* HABILLAGES */
+        {cat:'Habillages',nom:'CARRELO (panneaux)',desc:'Imitation carrelage, panneau minéral 8mm. 14 coloris disponibles (blanc, travertin, marbre, bois…). À partir de 169€.',icon:'🗿'},
+        {cat:'Habillages',nom:'DESIGN (panneaux)',desc:'Mousse XPS haute densité, finition polymère lisse. Blanc, gris ou gris clair. 23 ou 63mm d\'épaisseur.',icon:'🎨'},
+        {cat:'Habillages',nom:'RELIEF (panneaux)',desc:'Relief texturé, mousse XPS. Blanc ardoise, ciment gris, marbre blanc, marbre gris clair, métro blanc.',icon:'🧱'},
+        {cat:'Habillages',nom:'ULTRA (panneaux)',desc:'ACP ultra-fin 4mm, usinable. Blanc alpin, ciment gris clair, marbre blanc, marbre gris veines dorées.',icon:'✨'},
+        {cat:'Habillages',nom:'Dalles murales effet carrelage',desc:'SPC 4mm, bouvetage discret. Carrelage gris clair ou gris foncé. Format 610x305mm.',icon:'🔲'},
+        {cat:'Habillages',nom:'Dalles murales sans joints',desc:'SPC 4mm, sans joints apparents. Ciment gris, marbre blanc, marbre gris foncé, travertin.',icon:'🪨'},
+        {cat:'Habillages',nom:'Panneau cloison double face',desc:'Deux faces polymère blanc, XPS 63mm. Crée une cloison de douche toute hauteur.',icon:'🏗️'},
+        {cat:'Habillages',nom:'Niche de douche encastrée',desc:'Acier inox peint époxy, blanc, 300x300x60mm. Corps clos étanche, installation par encastrement.',icon:'🗄️'},
+        /* PAROIS */
+        {cat:'Parois',nom:'Paroi INTIMITY (fixe)',desc:'Verre sécurit Easy Clean avec bande occultante 1000mm. Alu satiné ou noir. De 300 à 1200mm.',icon:'🖼️'},
+        {cat:'Parois',nom:'Paroi ELEGANCY (fixe)',desc:'Verre sécurit Easy Clean, aluminium satiné. De 400 à 1000mm. Raclette incluse.',icon:'🔳'},
+        {cat:'Parois',nom:'Coulissante 2 vantaux',desc:'Verre sécurit 6mm, fermeture magnétique. Finition noir. 1200 ou 1400mm de largeur.',icon:'🚪'},
+        {cat:'Parois',nom:'Coulissante 3 vantaux',desc:'Verre sécurit 6mm, aluminium satiné. De 1000 à 1600mm. Ouverture large facilitée.',icon:'🚪'},
+        {cat:'Parois',nom:'Paroi pliante INTIMITY',desc:'Verre sécurit Easy Clean, accès total, bande occultante 1000mm. De 700 à 1100mm.',icon:'🔀'},
+        {cat:'Parois',nom:'Rabat INTIMITY',desc:'Verre sécurit Easy Clean, bande occultante 1000mm. Alu satiné ou noir. De 400 à 700mm.',icon:'↩️'},
+        {cat:'Parois',nom:'Rabat ELEGANCY',desc:'Verre sécurit Easy Clean, aluminium satiné. De 400 à 700mm. Raclette incluse.',icon:'↪️'},
+        /* ROBINETTERIE */
+        {cat:'Robinetterie',nom:'Colonne de douche DORÉE',desc:'Thermostatique, ciel de pluie, douchette. Finition dorée haut de gamme. Sécurité 38°C. Certifié ACS.',icon:'🥇'},
+        {cat:'Robinetterie',nom:'Colonne déportée DORÉE',desc:'Thermostatique déportée, ciel de pluie, douchette. Finition dorée. Sécurité 38°C. Certifié ACS.',icon:'✨'},
+        {cat:'Robinetterie',nom:'Set de douche',desc:'Robinet thermostatique + douchette + barre. Chromé ou noir. Sécurité 38°C. Certifié ACS.',icon:'🚿'},
+        {cat:'Robinetterie',nom:'Robinet mitigeur lavabo',desc:'Laiton, cartouche qualité sup. Chromé, doré ou noir. Livré avec 2 flexibles 600mm.',icon:'🪠'},
+        /* SOLS */
+        {cat:'Sols',nom:'Sol SPC',desc:'Antidérapant PN18, sous-couche EVA. Chêne blanchi, gris ciment ou travertin. Garantie 5 ans.',icon:'🟫'},
+        {cat:'Sols',nom:'Sol CARRELO',desc:'Imitation carrelage, matière minérale. Pierre blanche ou pierre grise. Format 294x600mm.',icon:'⬜'},
+        /* AMEUBLEMENT */
+        {cat:'Ameublement',nom:'Meuble SDB inox tiroir',desc:'Inox laqué avec vasque céramique + LED. Blanc, bois ou gris. De 500 à 1000mm de largeur.',icon:'🪵'},
+        {cat:'Ameublement',nom:'Vasque PMR',desc:'Kit complet avec support, miroir et LED. Utilisable assis ou debout. 50 ou 60cm.',icon:'🚿'},
+        {cat:'Ameublement',nom:'Miroir LED Galet',desc:'Forme organique, antibuée, 3 températures, tactile. 800x550mm. IP44. Garantie 2 ans.',icon:'🪞'},
+        {cat:'Ameublement',nom:'Miroir LED Rectangle',desc:'Antibuée, 3 températures de couleur, tactile. Horizontal 800x600mm ou Vertical 500x700mm.',icon:'🔲'},
+        {cat:'Ameublement',nom:'Abattant lavant séchant Original',desc:'Buses autonettoyantes, siège chauffant, séchage. 4 modes de nettoyage. Télécommande incluse.',icon:'🚽'},
+        {cat:'Ameublement',nom:'Abattant lavant séchant Deluxe',desc:'Stérilisation UVC, bouclier aérien désodorisant, brouillard antibactérien. Haute technologie.',icon:'💎'},
+        {cat:'Ameublement',nom:'Étagère serviettes',desc:'Design épuré, 2 points de fixation. 600x190mm. Chromé, doré ou noir.',icon:'🛋️'},
+        {cat:'Ameublement',nom:'Porte serviette',desc:'Design élégant, 2 points de fixation. 600x75mm. Chromé, doré ou noir.',icon:'🏷️'},
+        {cat:'Ameublement',nom:'Patère peignoir',desc:'Double accroche, installation facile. 71x55mm. Chromé, doré ou noir.',icon:'🧥'},
+        /* SÉCURITÉ */
+        {cat:'Sécurité',nom:'Barre DESIGN droite',desc:'40 ou 60cm, diamètre 32mm. Jusqu\'à 125kg. Blanc, chromé ou noir. Idéale stabilité et sécurité.',icon:'✋'},
+        {cat:'Sécurité',nom:'Barre DESIGN en T',desc:'60x90cm, diamètre 32mm, avec support douchette. Blanc, chromé ou noir.',icon:'⊤'},
+        {cat:'Sécurité',nom:'Barre DESIGN 135°',desc:'Barre coudée 135°, diamètre 32mm, double main courante. Blanc, chromé ou noir.',icon:'↗️'},
+        {cat:'Sécurité',nom:'Barre ergonomique ECO',desc:'38cm, PVC renforcé acier inox. Blanche. Jusqu\'à 125kg. Rosaces cache-vis incluses.',icon:'🖐️'},
+        {cat:'Sécurité',nom:'Barre relevable ECO',desc:'Avec béquille et coussin repose-bras. Hauteur pied réglable. Jusqu\'à 150kg. Blanche.',icon:'♿'},
+        {cat:'Sécurité',nom:'Siège DESIGN',desc:'Pliable, frein de chute, hauteur réglable. Blanc ou noir. Livré avec cale de réhausse 28mm.',icon:'🪑'},
+        {cat:'Sécurité',nom:'Siège Éco',desc:'Pliable, coussin d\'assise gris démontable, hauteur ajustable. Blanc et gris.',icon:'🪑'},
+        {cat:'Sécurité',nom:'Siège Éco avec accoudoirs',desc:'Pliable avec accoudoirs pour faciliter les transferts. Coussin d\'assise et dossier démontables.',icon:'🦽'},
+        {cat:'Sécurité',nom:'Tabouret de douche',desc:'Acier inoxydable, assise antidérapante, léger et facile à déplacer. Blanc.',icon:'🪑'},
     ];
     let selection=new Set();
     function renderGrid(filter){
